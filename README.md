@@ -21,8 +21,8 @@ The answer is pretty darn quickly with with virtually no configuration.
 * Jackson/FasterXML
 
 ### Instructions
-The application uses the springboot-starter-web to run on an embedded Tomcat server. 
-Which is configured to run on it's default port (8080).  
+The application uses the springboot-starter-web to run on an embedded Tomcat server, 
+which is configured to run on it's default port (8080).  
   
 Springboot auto-magically builds the application when run from main, pulling in the 
 desired starter dependencies (which in turn include the dependencies listed above).  
