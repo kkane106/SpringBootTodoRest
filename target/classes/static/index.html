@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="sbTest">
+<head>
+	<script src="angular.min.js"></script>
+	<script>
+		var app = angular.module("sbTest", []);
+		app.controller("homeCtrl", function($scope, dataService) {
+			vm = this;
+			vm.message = "Hello Ng";
+			
+			vm.todos = [];
+			
+			// Create some test objects to display
+			/* dataService.createTodo();
+			dataService.createTodo();
+			dataService.createTodo();
+			dataService.createTodo(); */
+			
+			dataService.getTodos()
+				.then(function(data) {
+					vm.todos = data.data._embedded.todos;
+					console.log(data.data._embedded.todos);
+				})
+		});
+		
+		app.factory("dataService", function($http){
+			var getTodos = function() {
+				return $http({
+					method : 'GET',
+					url : "/todos"
+				})
+			};
+			
+			var createTodo = function() {
+				return $http({
+					method : 'POST',
+					url : "/todos",
+					headers : {
+						'Content-type' : 'application/json'
+					},
+					data : {"title" : "test"}
+				})
+			}
+			
+			return {
+				getTodos : getTodos,
+				createTodo : createTodo
+			}
+		})
+	</script>
+	<title>Home</title>
+</head>
+<body ng-controller="homeCtrl as ctrl">
+	<h1>INDEX</h1>
+	<h3>{{ctrl.message}}</h3>
+	<ul ng-repeat="todo in ctrl.todos">
+		<li><a href={{todo._links.self.href}}>{{todo.title}}</a></li>
+	</ul>
+</body>
+</html>
